@@ -152,6 +152,23 @@
     /* Badges de estado */
     .estado-pendiente { color: #c0392b; font-weight: 700; }
     .estado-respondida { color: #27ae60; font-weight: 700; }
+
+    /* Centrar el botón de Iniciar Sesión dentro del formulario */
+#btn-iniciar-sesion {
+  display: block;
+  width: max-content;      /* contenido ajustado, no ancho completo */
+  margin: 0 auto 12px;     /* centra horizontalmente */
+}
+
+/* Centrar el banner (imagen) dentro del formulario */
+#contactosForm .image-container {
+  display: flex;
+  justify-content: center; /* centra horizontalmente la imagen */
+}
+
+#contactosForm .image-container img {
+  display: block;          /* asegura que respete el centrado en flex */
+}
   </style>
 </head>
 <body>
