@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <title>PORTAL DE SERVICIOS</title>
+  <!-- Favicon -->
+  <link rel="icon" href="https://res.cloudinary.com/dqqeavica/image/upload/v1759936783/Servicios_cn6dtr.png" type="image/png">
+  <meta name="theme-color" content="#007BFF" />
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- DataTables y Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.dataTables.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.bootstrap5.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <style>
+    body, html {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100%;
+      min-height: 100vh;
+      background-image: url('https://res.cloudinary.com/dqqeavica/image/upload/v1753538930/FONDO_JHONNY_sugwsj.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    .container, main.container {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      min-width: 100vw !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: rgba(255,255,255,0.05);
+    }
+    .titulo-contenedor h1, .titulo-contenedor, h1.titulo-animado {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #007bff;
+      text-shadow: 3px 3px 3px #031732;
+      animation: rotate 5s infinite linear, stay 10s infinite;
+      text-align: center;
+    }
+    @keyframes rotate { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+    @keyframes stay { 0%, 25% { transform: rotateY(0deg);} 50%, 75% { transform: rotateY(0deg);} 100% { transform: rotateY(360deg);} }
+    .image-container img { max-width: 220px; border-radius: 2px; }
+    .copyright { font-size: 0.85em; color: #666; margin-top: 4px; text-align: center; }
+    #contactosForm {
+      margin: 30px auto 0 auto; max-width: 400px; background: rgba(255,255,255,0.97);
+      border-radius: 12px; box-shadow: 0 0 8px rgba(0,0,0,0.2); padding: 24px 16px 10px 16px; display: block;
+      transition: opacity .25s ease, transform .25s ease;
+      z-index: 10;
+    }
+    #contactosForm label { font-weight: bold; color: #1257b7; }
+    #contactosForm input[type="number"], #contactosForm input[type="password"], #contactosForm input[type="text"] {
+      width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #888; margin-bottom: 7px; margin-top: 2px;
+    }
+    .boton-efecto {
+      background: linear-gradient(90deg, #1257b7, #3ea652); color: white; border: none; padding: 8px 16px; border-radius: 7px;
+      font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.2s; box-shadow: 1px 2px 4px #ccc;
+    }
+    .boton-efecto:hover { background: linear-gradient(90deg, #3ea652, #1257b7); }
+    .error { color: red; margin-bottom: 8px; text-align: center; font-weight: bold; }
+    #tituloProfesional {
+      margin: 20px 0 5px 0; font-size: 1.6em; color: #007bff; font-weight: bold; text-align: left; letter-spacing: 1px;
+    }
+    #tablaServicios th, #tablaServicios td, #tablaServicios thead th, #tablaServicios tfoot th {
+      text-align: center !important; vertical-align: middle !important;
+    }
+    #tablaServicios { width: 100% !important; background: rgba(255,255,255,0.98); border-radius: 10px; margin-top: 20px; }
+    .btn-accion { border-radius: 6px !important; font-weight: bold; font-size: 1em; padding: 3px 10px !important; margin-right: 3px; color: #fff !important; }
+    .btn-responder { background-color: #e74c3c !important; }
+    .btn-editar { background-color: #27ae60 !important; }
+    .btn-whatsapp { background: #25D366 !important; color: white !important; border-radius: 6px !important; font-size: 1.15em !important; padding: 3px 10px !important; margin-left: 3px; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-whatsapp i { font-size: 1.3em !important; color: white !important; vertical-align: middle; }
+    .resaltado-cambio { background: #fff6b2 !important; transition: background 1.6s; }
+    .table-responsive { overflow-x: auto; }
+    .modal-content { border-radius: 12px; }
+    .swal2-popup.swal2-responsive-popup { width: 350px !important; max-width: 95vw; font-size: 15px !important; }
+    .icon-btn-header { background: transparent; border: none; cursor: pointer; font-size: 1.5em; vertical-align: middle; color: #1976d2; }
+    .icon-btn-header:hover { color: #28a745; }
+
+    .titulo-contenedor { perspective: 1200px; text-align: center; }
+    .titulo-animado { font-size: 2rem; font-weight: bold; color: #007BFF; text-shadow: 3px 3px 3px #031732; animation: rotate 5s infinite linear, stay 10s infinite; }
+    .descripcion-animado { font-size: 1.5rem; font-weight: bold; color: #007BFF; text-shadow: 3px 3px 3px #A9A9A9; animation: rotate 5s infinite linear, stay 10s infinite; }
+    .form-description { text-align: center; font-size: 1em; color: #666; margin-bottom: 20px; }
+    h1, h2 { text-align: center; margin-bottom: 10px; }
+
+    /* Loader centrado (overlay) */
+    .loader{
+      position:fixed; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.35);
+      z-index:9999; backdrop-filter: blur(2px);
+      opacity:1; transition: opacity .12s ease;
+      will-change: opacity;
+    }
+    .loader.hidden{
+      display:flex !important;
+      opacity:0; pointer-events:none;
+    }
+    .spinner-ios{
+      position:relative; width:64px; height:64px;
+    }
+    .spinner-ios i{
+      position:absolute; left:50%; top:50%;
+      width:6px; height:18px; margin:-9px 0 0 -3px;
+      background:#fff; border-radius:3px;
+      opacity:.2;
+      animation:iosFade 1.2s linear infinite;
+      transform-origin: center center;
+    }
+    @keyframes iosFade{
+      0%, 39%, 100% { opacity:.2; }
+      40% { opacity:1; }
+    }
+    .spinner-ios i:nth-child(1)  { transform: rotate(  0deg) translateY(-24px); animation-delay:-1.1s; }
+    .spinner-ios i:nth-child(2)  { transform: rotate( 30deg) translateY(-24px); animation-delay:-1.0s; }
+    .spinner-ios i:nth-child(3)  { transform: rotate( 60deg) translateY(-24px); animation-delay:-0.9s; }
+    .spinner-ios i:nth-child(4)  { transform: rotate( 90deg) translateY(-24px); animation-delay:-0.8s; }
+    .spinner-ios i:nth-child(5)  { transform: rotate(120deg) translateY(-24px); animation-delay:-0.7s; }
+    .spinner-ios i:nth-child(6)  { transform: rotate(150deg) translateY(-24px); animation-delay:-0.6s; }
+    .spinner-ios i:nth-child(7)  { transform: rotate(180deg) translateY(-24px); animation-delay:-0.5s; }
+    .spinner-ios i:nth-child(8)  { transform: rotate(210deg) translateY(-24px); animation-delay:-0.4s; }
+    .spinner-ios i:nth-child(9)  { transform: rotate(240deg) translateY(-24px); animation-delay:-0.3s; }
+    .spinner-ios i:nth-child(10) { transform: rotate(270deg) translateY(-24px); animation-delay:-0.2s; }
+    .spinner-ios i:nth-child(11) { transform: rotate(300deg) translateY(-24px); animation-delay:-0.1s; }
+    .spinner-ios i:nth-child(12) { transform: rotate(330deg) translateY(-24px); animation-delay: 0s; }
+
+    /* Input password toggle */
+    .input-pass-group { position: relative; width: 100%; }
+    .input-pass-group input { width: 100%; padding-right: 42px; }
+    .input-pass-group .toggle-pass {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      border: 0; background: transparent; padding: 4px; cursor: pointer; line-height: 0; color: #007bff;
+    }
+    .input-pass-group .toggle-pass:focus-visible { outline: 2px solid #80bdff; border-radius: 4px; }
+
+    /* Badges de estado */
+    .estado-pendiente { color: #c0392b; font-weight: 700; }
+    .estado-respondida { color: #27ae60; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <!-- Loader iOS -->
+  <div id="loader" class="loader hidden" aria-live="polite" aria-busy="true">
+    <div class="spinner-ios" role="status" aria-label="Cargando">
+      <i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </div>
+
+  <!-- Formulario de Validación -->
+  <form id="contactosForm">
+    <div class="titulo-contenedor">
+      <h1 class="titulo-animado">PORTAL DE SERVICIOS</h1>
+    </div>
+    <p style="color: grey; text-align: justify; font-size: 13px;">
+      <b>Este Portal es de uso Exclusivo de los Profesionales.</b><br>
+      <i>Equipo del Hacer</i>
+    </p>
+
+    <label for="documento"><big><b>Documento:</b></big></label>
+    <div class="input-pass-group">
+      <input
+        type="password"
+        id="documento"
+        name="documento"
+        placeholder="Sin puntos ni espacios"
+        required
+        inputmode="numeric"
+        pattern="[0-9]*"
+        autocomplete="off"
+      />
+      <button type="button" id="toggleDocumento" class="toggle-pass" aria-label="Mostrar/Ocultar documento" aria-controls="documento" aria-pressed="false" title="Mostrar/Ocultar">
+        <!-- OJO CERRADO (inicial: oculto) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+          <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="errorMensaje" class="error"></div>
+    <button type="button" class="boton-efecto" id="btn-iniciar-sesion" onclick="validarDocumento()"><big><b>Iniciar Sesión</b></big></button>
+
+    <div class="image-container">
+      <img id="imagePreview" src="https://res.cloudinary.com/dqqeavica/image/upload/v1753538919/BANNER_JHONNY_e0yw7m.png" alt="Banner">
+    </div>
+    <div class="copyright">
+      Copyright © <br>
+      <a href="https://wa.me/573103230712" target="_blank"><b>Oscar Polanía</b></a>
+    </div>
+  </form>
+
+  <!-- Contenedor de la tabla (oculto al inicio) -->
+  <main class="container mt-3" id="mainTableContainer" style="display:none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top:10px; margin-bottom: 0;">
+      <div id="tituloProfesional"></div>
+      <div style="display: flex; align-items: center;">
+        <div class="header-right" style="display:flex; flex-direction:column; align-items:flex-end; margin-right:12px;">
+          <div class="image-container" style="margin-bottom:2px; max-width:110px;">
+            <img id="imagePreview2" src="https://res.cloudinary.com/dqqeavica/image/upload/v1753538919/BANNER_JHONNY_e0yw7m.png" alt="Banner" style="max-width:140px;">
+          </div>
+          <div class="copyright" style="font-size:0.65em;">
+            Copyright © <a href="https://wa.me/573103230712" target="_blank"><b>OSCAR POLANIA</b></a>
+          </div>
+          <button class="boton-efecto" id="btn-cerrar-sesion" onclick="cerrarSesion()" style="background:#C0392B;">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table id="tablaServicios" class="table table-striped responsive">
+        <thead></thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modal Responder/Editar -->
+  <div class="modal fade" id="modalRespuesta" tabindex="-1" aria-labelledby="modalRespuestaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <form id="formRespuesta">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRespuestaLabel">RESPUESTA A SOLICITUD</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-2">
+              <div class="col-md-4">
+                <label class="form-label">DOCUMENTO</label>
+                <input id="m_doc" class="form-control" type="text" readonly>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">NOMBRE</label>
+                <input id="m_nombre" class="form-control" type="text" readonly>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">CONTACTO</label>
+                <input id="m_contacto" class="form-control" type="text" readonly>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-6">
+                <label class="form-label">RESIDENCIA</label>
+                <input id="m_residencia" class="form-control" type="text" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">SERVICIO</label>
+                <input id="m_servicio" class="form-control fw-bold" type="text" readonly>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-6">
+                <label class="form-label">RESPONSABLE</label>
+                <input id="m_responsable" class="form-control" type="text" placeholder="Responsable">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">ESTADO</label>
+                <input id="m_estado" class="form-control" type="text" readonly>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-12">
+                <label class="form-label">SOLICITUD</label>
+                <textarea id="m_solicitud" class="form-control" rows="3" readonly></textarea>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-12">
+                <label class="form-label">RESPUESTA</label>
+                <textarea id="m_respuesta" class="form-control" rows="4" placeholder="Escribe la respuesta..."></textarea>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-4">
+                <label class="form-label">AÑO</label>
+                <input id="m_ano" class="form-control" type="text" readonly>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">MES</label>
+                <input id="m_mes" class="form-control" type="text" readonly>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">DIA</label>
+                <input id="m_dia" class="form-control" type="text" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btnGuardarRespuesta" type="submit" class="boton-efecto">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal WhatsApp -->
+  <div class="modal fade" id="modalWhatsapp" tabindex="-1" aria-labelledby="modalWhatsappLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="formWhatsapp">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalWhatsappLabel">Enviar WhatsApp</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <label for="mensajeWhatsapp">Mensaje:</label>
+            <textarea class="form-control" id="mensajeWhatsapp" rows="6" placeholder="Escribe tu mensaje aquí"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button id="btnEnviarWhatsapp" type="submit" class="boton-efecto" style="background: #25D366;">Enviar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS y dependencias -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.dataTables.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.colVis.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+  <script>
+    // URL del Web App (ACTUALIZA este valor al desplegar el proyecto GS de PORTAL DE SERVICIOS)
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyjJX1uAE00cvX2mhhn3-W9_kIDaPTCeF09LmQIGk3izfQ-S2qMJO4lRAoQ5PaMq63R9A/exec';
+
+    // Sonidos
+    const SOUNDS = {
+      question: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011577/Pay_fail_ls2aif.mp3',
+      info: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011578/Default_notification_pkp4wr.mp3',
+      success: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011577/Pay_success_t5aawh.mp3',
+      error: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011578/Low_battery_d5qua1.mp3',
+      warning: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011578/Low_battery_d5qua1.mp3',
+      resumen: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011577/Charging_clkgcd.mp3',
+      login: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011577/Siri_star_g1owy4.mp3',
+      logout: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011577/Siri_End_kelv02.mp3',
+      back: 'https://res.cloudinary.com/dqqeavica/video/upload/v1759011578/Keyboard_Enter_b9k2dc.mp3'
+    };
+    function playSoundOnce(url){
+      try{ const a = new Audio(url); a.preload = 'auto'; a.play().catch(()=>{}); }catch(e){}
+    }
+    // Parche SweetAlert2 para sonidos
+    if (window.Swal && typeof Swal.fire === 'function'){
+      const __fire = Swal.fire.bind(Swal);
+      Swal.fire = function(options = {}, ...rest){
+        try{
+          if (options.soundTag === 'resumen'){
+            playSoundOnce(SOUNDS.resumen);
+          } else {
+            const icon = options.icon || options.type;
+            if (icon && SOUNDS[icon]) playSoundOnce(SOUNDS[icon]);
+          }
+        }catch(e){}
+        return __fire(options, ...rest);
+      }
+    }
+
+    // Loader
+    const loader = document.getElementById('loader');
+    let loadingCount = 0, loaderTimer = null;
+    function startLoading(){
+      loadingCount++;
+      if (loadingCount === 1){
+        loaderTimer = setTimeout(()=>{ loader.classList.remove('hidden'); loaderTimer = null; }, 120);
+      }
+    }
+    function stopLoading(){
+      if (loadingCount === 0) return;
+      loadingCount--;
+      if (loadingCount === 0){
+        if (loaderTimer){ clearTimeout(loaderTimer); loaderTimer = null; }
+        loader.classList.add('hidden');
+      }
+    }
+
+    // Adaptadores API
+    async function apiValidarProfesional(documento) {
+      startLoading();
+      try{
+        const url = new URL(WEB_APP_URL);
+        url.searchParams.set('action', 'validarProfesional');
+        url.searchParams.set('documento', documento);
+        const resp = await fetch(url.toString(), { method: 'GET' });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return await resp.json();
+      } finally { stopLoading(); }
+    }
+
+    async function apiGuardarRespuesta({ rowIndex, responsable, respuesta }) {
+      startLoading();
+      try {
+        const body = new URLSearchParams({
+          action: 'guardarRespuesta',
+          rowIndex: String(rowIndex || ''),
+          responsable: responsable || '',
+          respuesta: respuesta || ''
+        });
+        const resp = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return await resp.json();
+      } finally { stopLoading(); }
+    }
+
+    async function apiEliminarFilasServicios({ documento, rowIndices }) {
+      startLoading();
+      try {
+        const body = new URLSearchParams({
+          action: 'eliminarFilasServicios',
+          documento: documento || '',
+          rowIndices: JSON.stringify(rowIndices || [])
+        });
+        const resp = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return await resp.json();
+      } finally { stopLoading(); }
+    }
+
+    // Estado global
+    let esAdmin = false;
+    let nombreProfesional = '';
+    let servicioProfesional = '';
+    let encabezados = [];
+    let filas = [];
+    let tabla;
+    let documentoGuardado = '';
+    let deleteMode = false;
+    let selectedRowIndices = new Set(); // __ROW__ de SERVICIOS
+
+    // Login y pantalla
+    async function validarDocumento() {
+      const input = document.getElementById('documento');
+      const documento = (input.value || '').trim();
+
+      if (documento === "") {
+        Swal.fire({ icon: 'warning', title: 'Campo requerido', text: 'Ingresa un documento para validar.', customClass: { popup: 'swal2-responsive-popup' } });
+        return;
+      }
+      if (!/^\d{6,10}$/.test(documento)) {
+        Swal.fire({ icon: 'warning', title: 'Formato incorrecto', text: 'Ingresa un N° de Documento correcto (6 a 10 dígitos).', customClass: { popup: 'swal2-responsive-popup' } });
+        return;
+      }
+      if (navigator.clipboard) { navigator.clipboard.writeText(documento).catch(()=>{}); }
+
+      playSoundOnce(SOUNDS.login);
+      Swal.fire({
+        title: 'Validando...',
+        html: 'Por favor espera unos segundos.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => { Swal.showLoading(); }
+      });
+
+      try {
+        const res = await apiValidarProfesional(documento);
+        Swal.close();
+
+        if (!res || res.existe !== true) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Acceso restringido',
+            html: 'Este Portal es de uso exclusivo de los Profesionales del Equipo del Hacer.<br><br><div class="copyright">Copyright © <a href="https://whatsapp.com/channel/0029VbBEYJ83LdQbOODLO10S" target="_blank"><b>BOT HEART</b></a></div>',
+            width: '90%', padding: '1rem', customClass: { popup: 'swal2-responsive-popup' }
+          });
+          mostrarFormulario();
+          return;
+        }
+
+        esAdmin = !!res.esAdmin;
+        nombreProfesional = res.nombreProfesional || '';
+        servicioProfesional = res.servicioProfesional || '';
+        encabezados = res.encabezados || [];
+        filas = res.filas || [];
+        documentoGuardado = documento;
+
+        document.getElementById('tituloProfesional').textContent =
+          'Profesional ' + (nombreProfesional || (esAdmin ? 'ADMINISTRADOR' : ''));
+
+        if (!filas || filas.length === 0) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Sin registros',
+            html: 'No hay solicitudes para tu servicio en este momento.<br><br><div class="copyright">Copyright © <a href="https://whatsapp.com/channel/0029VbBEYJ83LdQbOODLO10S" target="_blank"><b>BOT HEART</b></a></div>',
+            width: '90%', padding: '1rem', customClass: { popup: 'swal2-responsive-popup' }
+          });
+          mostrarFormulario();
+          return;
+        }
+
+        ocultarFormulario();
+        inicializarTabla();
+      } catch (err) {
+        Swal.close();
+        Swal.fire({ icon:'error', title:'Error de red', text:String(err) });
+      }
+    }
+
+    function mostrarFormulario() {
+      document.getElementById('contactosForm').style.display = 'block';
+      document.getElementById('mainTableContainer').style.display = 'none';
+      document.getElementById('tituloProfesional').textContent = "";
+    }
+    function ocultarFormulario() {
+      document.getElementById('contactosForm').style.display = 'none';
+      document.getElementById('mainTableContainer').style.display = 'block';
+    }
+    function cerrarSesion() {
+      playSoundOnce(SOUNDS.logout);
+      esAdmin = false;
+      nombreProfesional = '';
+      servicioProfesional = '';
+      encabezados = [];
+      filas = [];
+      documentoGuardado = '';
+      selectedRowIndices.clear();
+      deleteMode = false;
+      if (tabla) { tabla.destroy(); }
+      mostrarFormulario();
+      document.getElementById('documento').value = "";
+    }
+
+    function centrarEncabezadosTabla() {
+      $('#tablaServicios thead th, #tablaServicios tfoot th')
+        .removeClass('text-start text-left text-end text-right')
+        .addClass('text-center')
+        .css('text-align', 'center');
+    }
+
+    function inicializarTabla() {
+      // Construir columnas base desde encabezados (incluye "__ROW__" al final)
+      const idxDocumento   = encabezados.indexOf('DOCUMENTO');
+      const idxNombre      = encabezados.indexOf('NOMBRE');
+      const idxContacto    = encabezados.indexOf('CONTACTO');
+      const idxResidencia  = encabezados.indexOf('RESIDENCIA');
+      const idxServicio    = encabezados.indexOf('SERVICIO');
+      const idxResponsable = encabezados.indexOf('RESPONSABLE');
+      const idxSolicitud   = encabezados.indexOf('SOLICITUD');
+      const idxEstado      = encabezados.indexOf('ESTADO');
+      const idxRespuesta   = encabezados.indexOf('RESPUESTA');
+      const idxAno         = encabezados.indexOf('AÑO');
+      const idxMes         = encabezados.indexOf('MES');
+      const idxDia         = encabezados.indexOf('DIA');
+      const idxRowIndex    = encabezados.indexOf('__ROW__');
+
+      // Columnas visibles + Acciones + Selección (admin) + __ROW__ (oculta)
+      let colsDT = encabezados.slice(0, encabezados.length - 1).map((h) => ({ title: h })); // sin __ROW__
+      colsDT.push({ title: "Acción" });   // RESPONDER/EDITAR
+      colsDT.push({ title: "WhatsApp" }); // WHATSAPP
+      colsDT.push({ title: "Seleccionar" }); // Admin
+      colsDT.push({ title: "__ROW__" }); // Índice real de hoja (oculta)
+
+      // Construir HTML de thead/tfoot
+      $("#tablaServicios thead").html("<tr>"+colsDT.map(col=>`<th class='text-center'>${col.title}</th>`).join("")+"</tr>");
+      $("#tablaServicios tfoot").html("<tr>"+colsDT.map(col=>`<th class='text-center'>${col.title}</th>`).join("")+"</tr>");
+
+      // Data: agregar columnas de acción, selección y __ROW__
+      const data = filas.map(row => {
+        const base = row.slice(0, encabezados.length - 1); // A..L
+        const rowIndexVal = row[idxRowIndex]; // __ROW__
+        return [...base, '', '', '', rowIndexVal];
+      });
+
+      if ($.fn.DataTable.isDataTable('#tablaServicios')) {
+        $('#tablaServicios').DataTable().destroy();
+        $('#tablaServicios').empty();
+      }
+
+      // Índices calculados en tabla final
+      const idxAccion     = colsDT.length - 4;
+      const idxWhatsapp   = colsDT.length - 3;
+      const idxSeleccion  = colsDT.length - 2;
+      const idxRowHidden  = colsDT.length - 1;
+
+      // Columnas a ocultar inicialmente
+      const toHideHeaders = ['DOCUMENTO', 'CONTACTO', 'AÑO', 'MES', 'DIA', '__ROW__'];
+      const ocultarIdxs = colsDT.map((c, i) => i).filter(i => toHideHeaders.includes(colsDT[i].title));
+
+      // Botones por rol
+      const colvisButton = { extend: 'colvis', text: 'Filtrar Columnas' };
+      const commonExportButtons = [
+        { extend: 'copy',  text: '<i class="bi bi-clipboard-fill"></i>', className: 'btn btn-secondary', exportOptions: { columns: ':visible' }, title: 'Servicios ' + nombreProfesional },
+        { extend: 'excel', text: '<i class="bi bi-file-earmark-excel-fill"></i>', className: 'btn btn-success',  exportOptions: { columns: ':visible' }, filename: 'Servicios ' + nombreProfesional, title: 'Servicios ' + nombreProfesional },
+        { extend: 'pdf',   text: '<i class="bi bi-file-earmark-pdf-fill"></i>',   className: 'btn btn-danger',   exportOptions: { columns: ':visible' }, filename: 'Servicios ' + nombreProfesional, title: 'Servicios ' + nombreProfesional },
+        { extend: 'print', text: '<i class="bi bi-printer-fill"></i>',            className: 'btn btn-info',     exportOptions: { columns: ':visible' }, title: 'Servicios ' + nombreProfesional },
+        colvisButton
+      ];
+
+      const btnEliminar = {
+        text: `Eliminar <span class="ms-1 align-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-minus-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M6 8.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1 0-1"/>
+          </svg>
+        </span>`,
+        className: 'btn btn-outline-danger',
+        attr: { id: 'btnEliminarFilas' },
+        action: function(e, dt) {
+          playSoundOnce(SOUNDS.warning);
+          deleteMode = true;
+          selectedRowIndices.clear();
+          dt.column(idxSeleccion).visible(true);
+          $('#btnEliminarFilas').addClass('d-none');
+          $('#btnConfirmarEliminacion, #btnDescartarEliminacion').removeClass('d-none');
+          Swal.fire({
+            icon: 'warning',
+            title: 'Modo eliminación',
+            text: 'Selecciona una o varias filas para eliminar.',
+            timer: 1800,
+            showConfirmButton: false,
+            customClass: { popup: 'swal2-responsive-popup' }
+          });
+        }
+      };
+
+      const btnConfirmar = {
+        text: `Confirmar <span class="ms-1 align-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+          </svg>
+        </span>`,
+        className: 'btn btn-danger d-none',
+        attr: { id: 'btnConfirmarEliminacion' },
+        action: async function(e, dt) {
+          if (selectedRowIndices.size === 0) {
+            Swal.fire({ icon: 'info', title: 'Sin selección', text: 'Selecciona al menos una fila.', customClass: { popup: 'swal2-responsive-popup' } });
+            return;
+          }
+          const toDelete = Array.from(selectedRowIndices);
+
+          try {
+            Swal.fire({ title: 'Eliminando...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            const res = await apiEliminarFilasServicios({ documento: documentoGuardado, rowIndices: toDelete });
+            Swal.close();
+            if (!res || res.ok !== true) { throw new Error(res && res.error ? res.error : 'No se pudo eliminar'); }
+
+            // Quitar filas localmente
+            dt.rows(function(idx, rowData) {
+              const rowIndexVal = String(rowData[idxRowHidden] || '');
+              return toDelete.includes(rowIndexVal);
+            }).remove().draw(false);
+
+            // Salir del modo eliminación
+            exitDeleteMode(dt);
+
+            playSoundOnce(SOUNDS.success);
+            Swal.fire({
+              icon: 'success',
+              title: 'Fila(s) eliminada(s)',
+              html: (res.eliminadas || 0) + ' fila(s) eliminada(s).',
+              timer: 3000,
+              showConfirmButton: false,
+              customClass: { popup: 'swal2-responsive-popup' }
+            });
+          } catch (err) {
+            Swal.fire({ icon: 'error', title: 'Error al eliminar', text: String(err), customClass: { popup: 'swal2-responsive-popup' } });
+          }
+        }
+      };
+
+      const btnDescartar = {
+        text: `Descartar <span class="ms-1 align-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
+          </svg>
+        </span>`,
+        className: 'btn btn-secondary d-none',
+        attr: { id: 'btnDescartarEliminacion' },
+        action: function(e, dt) {
+          playSoundOnce(SOUNDS.back);
+          exitDeleteMode(dt);
+        }
+      };
+
+      const buttonsArr = esAdmin ? [...commonExportButtons, btnEliminar, btnConfirmar, btnDescartar] : [...commonExportButtons];
+
+      // Inicializar DataTable
+      tabla = $('#tablaServicios').DataTable({
+        language: { url: "//cdn.datatables.net/plug-ins/2.3.2/i18n/es-CO.json" },
+        responsive: false,
+        dom: 'Blfrtip',
+        scrollX: true,
+        autoWidth: true,
+        pagingType: 'full_numbers',
+        lengthMenu: [5, 10, 20, 50, 100],
+        columns: colsDT,
+        data: data,
+        order: [[idxRowHidden, 'desc']], // Descendente por índice real de hoja
+        buttons: buttonsArr,
+        columnDefs: [
+          // Ocultar columnas iniciales
+          ...ocultarIdxs.map(idx => ({ targets: idx, visible: false })),
+          // SERVICIO en negrilla
+          {
+            targets: idxServicio,
+            createdCell: function(td) { td.style.fontWeight = '700'; }
+          },
+          // ESTADO con color
+          {
+            targets: idxEstado,
+            render: function(val) {
+              const v = String(val || '').trim().toUpperCase();
+              if (v === 'RESPONDIDA') return `<span class="estado-respondida">RESPONDIDA</span>`;
+              return `<span class="estado-pendiente">PENDIENTE</span>`;
+            }
+          },
+          // Acción RESPONDER/EDITAR
+          {
+            targets: idxAccion,
+            orderable: false,
+            searchable: false,
+            className: 'text-center',
+            render: function(data, type, row, meta) {
+              const estadoVal = String(row[idxEstado] || '').trim().toUpperCase();
+              const isRespondida = (estadoVal === 'RESPONDIDA');
+              const btnText = isRespondida ? 'EDITAR' : 'RESPONDER';
+              const btnClass = isRespondida ? 'btn-editar' : 'btn-responder';
+              return `<button class="btn-accion ${btnClass}" data-row="${meta.row}" onclick="abrirModalRespuesta(${meta.row})">${btnText}</button>`;
+            }
+          },
+          // WhatsApp
+          {
+            targets: idxWhatsapp,
+            orderable: false,
+            searchable: false,
+            className: 'text-center',
+            render: function(data, type, row, meta) {
+              return `<button class="btn-whatsapp" data-row="${meta.row}" onclick="abrirModalWhatsapp(${meta.row})"><i class="bi bi-whatsapp"></i></button>`;
+            }
+          },
+          // Selección (admin)
+          {
+            targets: idxSeleccion,
+            orderable: false,
+            searchable: false,
+            visible: esAdmin ? false : false, // oculto por defecto (solo lo muestra el modo eliminación)
+            className: 'text-center',
+            render: function(data, type, row, meta) {
+              const rowIndexVal = String(row[idxRowHidden] || '');
+              const checked = selectedRowIndices.has(rowIndexVal) ? 'checked' : '';
+              return `<input type="checkbox" class="form-check-input row-select" data-rowindex="${rowIndexVal}" ${checked} />`;
+            }
+          },
+          // __ROW__ oculto
+          {
+            targets: idxRowHidden,
+            visible: false,
+            searchable: false
+          }
+        ]
+      });
+
+      tabla.off('draw');
+      tabla.on('draw', centrarEncabezadosTabla);
+      centrarEncabezadosTabla();
+
+      // Delegación para checkboxes (admin)
+      $('#tablaServicios tbody').off('change', 'input.row-select');
+      $('#tablaServicios tbody').on('change', 'input.row-select', function() {
+        const rowIndexVal = String(this.dataset.rowindex || '');
+        if (!rowIndexVal) return;
+        if (this.checked) selectedRowIndices.add(rowIndexVal);
+        else selectedRowIndices.delete(rowIndexVal);
+      });
+
+      function exitDeleteMode(dt) {
+        deleteMode = false;
+        selectedRowIndices.clear();
+        dt.column(idxSeleccion).visible(false);
+        $('#btnConfirmarEliminacion, #btnDescartarEliminacion').addClass('d-none');
+        $('#btnEliminarFilas').removeClass('d-none');
+      }
+    }
+
+    // ---- Modal Responder / Editar ----
+    let filaEdicion = null;
+    function abrirModalRespuesta(idxFila) {
+      filaEdicion = idxFila;
+      const row = tabla.row(idxFila).data();
+
+      // Mapeo de columnas usando encabezados actuales
+      const idxDocumento   = encabezados.indexOf('DOCUMENTO');
+      const idxNombre      = encabezados.indexOf('NOMBRE');
+      const idxContacto    = encabezados.indexOf('CONTACTO');
+      const idxResidencia  = encabezados.indexOf('RESIDENCIA');
+      const idxServicio    = encabezados.indexOf('SERVICIO');
+      const idxResponsable = encabezados.indexOf('RESPONSABLE');
+      const idxSolicitud   = encabezados.indexOf('SOLICITUD');
+      const idxEstado      = encabezados.indexOf('ESTADO');
+      const idxRespuesta   = encabezados.indexOf('RESPUESTA');
+      const idxAno         = encabezados.indexOf('AÑO');
+      const idxMes         = encabezados.indexOf('MES');
+      const idxDia         = encabezados.indexOf('DIA');
+
+      document.getElementById('m_doc').value        = row[idxDocumento] || '';
+      document.getElementById('m_nombre').value     = row[idxNombre] || '';
+      document.getElementById('m_contacto').value   = row[idxContacto] || '';
+      document.getElementById('m_residencia').value = row[idxResidencia] || '';
+      document.getElementById('m_servicio').value   = row[idxServicio] || '';
+      document.getElementById('m_responsable').value = (row[idxResponsable] || nombreProfesional || '');
+      document.getElementById('m_estado').value     = (String(row[idxEstado] || '').trim().toUpperCase() || 'PENDIENTE');
+      document.getElementById('m_solicitud').value  = row[idxSolicitud] || '';
+      document.getElementById('m_respuesta').value  = row[idxRespuesta] || '';
+      document.getElementById('m_ano').value        = row[idxAno] || '';
+      document.getElementById('m_mes').value        = row[idxMes] || '';
+      document.getElementById('m_dia').value        = row[idxDia] || '';
+
+      const estadoVal = String(row[idxEstado] || '').trim().toUpperCase();
+      const isRespondida = (estadoVal === 'RESPONDIDA');
+      const btn = document.getElementById('btnGuardarRespuesta');
+      btn.textContent = isRespondida ? 'Actualizar' : 'Guardar';
+
+      new bootstrap.Modal(document.getElementById('modalRespuesta')).show();
+    }
+
+    document.getElementById('formRespuesta').addEventListener('submit', async function(e){
+      e.preventDefault();
+      if (filaEdicion == null) return;
+
+      // Índices
+      const idxRowHidden  = encabezados.indexOf('__ROW__'); // en tabla es la última columna
+      const idxResponsable = encabezados.indexOf('RESPONSABLE');
+      const idxEstado      = encabezados.indexOf('ESTADO');
+      const idxRespuesta   = encabezados.indexOf('RESPUESTA');
+
+      const rowData = tabla.row(filaEdicion).data();
+      const rowIndex = rowData[rowData.length - 1]; // __ROW__ oculto
+      const responsable = document.getElementById('m_responsable').value.trim();
+      const respuesta = document.getElementById('m_respuesta').value.trim();
+
+      if (!responsable || !respuesta) {
+        Swal.fire({ icon:'warning', title:'Campos requeridos', text:'RESPONSABLE y RESPUESTA son obligatorios.', customClass: { popup: 'swal2-responsive-popup' } });
+        return;
+      }
+
+      try {
+        const res = await apiGuardarRespuesta({ rowIndex, responsable, respuesta });
+        if (!res || res.ok !== true) throw new Error(res && res.error ? res.error : 'No se pudo guardar');
+
+        // Actualizar localmente
+        const nueva = rowData.slice();
+        nueva[idxResponsable] = responsable;
+        nueva[idxRespuesta] = respuesta;
+        nueva[idxEstado] = 'RESPONDIDA';
+
+        tabla.row(filaEdicion).data(nueva).invalidate().draw(false);
+
+        // Resaltar cambios en columnas clave
+        const tr = tabla.row(filaEdicion).node();
+        [idxResponsable, idxRespuesta, idxEstado].forEach(i => {
+          if (tr && tr.children[i]) {
+            tr.children[i].classList.add('resaltado-cambio');
+            setTimeout(()=>{ tr.children[i].classList.remove('resaltado-cambio'); }, 2000);
+          }
+        });
+
+        bootstrap.Modal.getInstance(document.getElementById('modalRespuesta')).hide();
+        Swal.fire({
+          icon: 'success',
+          title: '¡Datos actualizados!',
+          html: 'La respuesta fue guardada correctamente.',
+          timer: 2500,
+          showConfirmButton: false
+        });
+      } catch (err) {
+        Swal.fire({ icon:'error', title:'Error al guardar', text:String(err) });
+      }
+    });
+
+    // ---- WhatsApp ----
+    let filaWhatsapp = null;
+    function abrirModalWhatsapp(idxFila) {
+      filaWhatsapp = idxFila;
+      const row = tabla.row(idxFila).data();
+
+      const idxNombre    = encabezados.indexOf('NOMBRE');
+      const idxContacto  = encabezados.indexOf('CONTACTO');
+      const idxSolicitud = encabezados.indexOf('SOLICITUD');
+      const idxRespuesta = encabezados.indexOf('RESPUESTA');
+      const idxResp      = encabezados.indexOf('RESPONSABLE');
+
+      const nombre = row[idxNombre] || '';
+      const solicitud = row[idxSolicitud] || '';
+      const respuesta = row[idxRespuesta] || '';
+      const responsable = (row[idxResp] || nombreProfesional || '').toString();
+
+      const mensajeBase =
+        `Hola ${nombre} buen día 👋🏻
+Hemos revisado atentamente tu solicitud:
+${solicitud}
+Te respondemos los siguiente:
+${respuesta}
+
+Cordialmente,
+
+${responsable}
+> Equipo del Hacer`;
+
+      const ta = document.getElementById('mensajeWhatsapp');
+      ta.value = mensajeBase;
+
+      new bootstrap.Modal(document.getElementById('modalWhatsapp')).show();
+    }
+
+    document.getElementById('formWhatsapp').addEventListener('submit', function(e){
+      e.preventDefault();
+      const mensaje = document.getElementById('mensajeWhatsapp').value.trim();
+      const rowData = tabla.row(filaWhatsapp).data();
+
+      const idxContacto  = encabezados.indexOf('CONTACTO');
+      let numero = (rowData[idxContacto] || '').toString().replace(/\D/g, '');
+
+      if (!numero) {
+        Swal.fire({icon:'error',title:'No hay número de WhatsApp disponible en la fila'});
+        return;
+      }
+
+      if (navigator.clipboard && mensaje) { navigator.clipboard.writeText(mensaje).catch(()=>{}); }
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const whatsappUrl = isMobile
+        ? ('whatsapp://send?phone=' + encodeURIComponent(numero) + '&text=' + encodeURIComponent(mensaje))
+        : ('https://api.whatsapp.com/send?phone=' + encodeURIComponent(numero) + '&text=' + encodeURIComponent(mensaje));
+      window.open(whatsappUrl, "_blank");
+
+      bootstrap.Modal.getInstance(document.getElementById('modalWhatsapp')).hide();
+    });
+
+    // Botones sonido
+    document.getElementById('btn-iniciar-sesion')?.addEventListener('click', ()=> playSoundOnce(SOUNDS.login));
+    document.getElementById('btn-cerrar-sesion')?.addEventListener('click', ()=> playSoundOnce(SOUNDS.logout));
+
+    // Mostrar/Ocultar documento
+    (function(){
+      const input = document.getElementById('documento');
+      const btn = document.getElementById('toggleDocumento');
+
+      const ICON_EYE_SLASH = `
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+  <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+  <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+</svg>`;
+      const ICON_EYE = `
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+</svg>`;
+
+      if (input && btn){
+        btn.addEventListener('click', function(){
+          const willShow = input.type === 'password';
+          input.type = willShow ? 'text' : 'password';
+          btn.setAttribute('aria-pressed', String(willShow));
+          btn.innerHTML = willShow ? ICON_EYE : ICON_EYE_SLASH;
+          try {
+            input.focus();
+            input.setSelectionRange(input.value.length, input.value.length);
+          } catch(e){}
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
