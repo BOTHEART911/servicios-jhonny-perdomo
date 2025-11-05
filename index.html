@@ -312,6 +312,12 @@
 
             <div class="row g-2 mt-2">
               <div class="col-md-4">
+                <label class="form-label">MEDIO</label>
+                <input id="m_medio" class="form-control" type="text" readonly>
+              </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-4">
                 <label class="form-label">AÑO</label>
                 <input id="m_ano" class="form-control" type="text" readonly>
               </div>
@@ -845,6 +851,7 @@
       const idxSolicitud   = encabezados.indexOf('SOLICITUD');
       const idxEstado      = encabezados.indexOf('ESTADO');
       const idxRespuesta   = encabezados.indexOf('RESPUESTA');
+      const idxMedio       = encabezados.indexOf('MEDIO');
       const idxAno         = encabezados.indexOf('AÑO');
       const idxMes         = encabezados.indexOf('MES');
       const idxDia         = encabezados.indexOf('DIA');
@@ -858,6 +865,7 @@
       document.getElementById('m_estado').value     = (String(row[idxEstado] || '').trim().toUpperCase() || 'PENDIENTE');
       document.getElementById('m_solicitud').value  = row[idxSolicitud] || '';
       document.getElementById('m_respuesta').value  = row[idxRespuesta] || '';
+      document.getElementById('m_medio').value        = row[idxMedio] || '';
       document.getElementById('m_ano').value        = row[idxAno] || '';
       document.getElementById('m_mes').value        = row[idxMes] || '';
       document.getElementById('m_dia').value        = row[idxDia] || '';
