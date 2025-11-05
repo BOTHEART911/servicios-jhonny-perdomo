@@ -154,32 +154,32 @@
     .estado-respondida { color: #27ae60; font-weight: 700; }
 
     /* Centrar el botón de Iniciar Sesión dentro del formulario */
-#btn-iniciar-sesion {
-  display: block;
-  width: max-content;      /* contenido ajustado, no ancho completo */
-  margin: 0 auto 12px;     /* centra horizontalmente */
-}
+    #btn-iniciar-sesion {
+      display: block;
+      width: max-content;
+      margin: 0 auto 12px;
+    }
 
-/* Centrar el banner (imagen) dentro del formulario */
-#contactosForm .image-container {
-  display: flex;
-  justify-content: center; /* centra horizontalmente la imagen */
-}
+    /* Centrar el banner (imagen) dentro del formulario */
+    #contactosForm .image-container {
+      display: flex;
+      justify-content: center;
+    }
 
-#contactosForm .image-container img {
-  display: block;          /* asegura que respete el centrado en flex */
-}
+    #contactosForm .image-container img {
+      display: block;
+    }
 
-/* Filtro de Residencia en modal de Registro */
-.residencia-filter-group {
-  display: flex; gap: 8px; align-items: center; margin-bottom: 6px;
-}
-.residencia-filter-group input[type="text"] {
-  flex: 1 1 auto; padding: 6px 8px; border: 1px solid #888; border-radius: 6px;
-}
-#reg-residencia {
-  width: 100%;
-}
+    /* Filtro de Residencia en modal de Registro */
+    .residencia-filter-group {
+      display: flex; gap: 8px; align-items: center; margin-bottom: 6px;
+    }
+    .residencia-filter-group input[type="text"] {
+      flex: 1 1 auto; padding: 6px 8px; border: 1px solid #888; border-radius: 6px;
+    }
+    #reg-residencia {
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -326,6 +326,7 @@
                 <label class="form-label">MEDIO</label>
                 <input id="m_medio" class="form-control" type="text" readonly>
               </div>
+            </div>
 
             <div class="row g-2 mt-2">
               <div class="col-md-4">
@@ -581,8 +582,11 @@
   <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
-  <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.dataTables.js"></script>
+
+  <!-- FIX: Cargar los nombres CORRECTOS de Responsive para DataTables -->
+  <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
   <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
+
   <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.bootstrap5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.min.js"></script>
@@ -977,7 +981,7 @@
       const btnDescartar = {
         text: `Descartar <span class="ms-1 align-middle">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708"/>
           </svg>
         </span>`,
         className: 'btn btn-secondary d-none',
@@ -1049,7 +1053,7 @@
             targets: idxSeleccion,
             orderable: false,
             searchable: false,
-            visible: esAdmin ? false : false, // oculto por defecto (solo lo muestra el modo eliminación)
+            visible: esAdmin ? false : false,
             className: 'text-center',
             render: function(data, type, row, meta) {
               const rowIndexVal = String(row[idxRowHidden] || '');
@@ -1118,7 +1122,7 @@
       document.getElementById('m_estado').value     = (String(row[idxEstado] || '').trim().toUpperCase() || 'PENDIENTE');
       document.getElementById('m_solicitud').value  = row[idxSolicitud] || '';
       document.getElementById('m_respuesta').value  = row[idxRespuesta] || '';
-      document.getElementById('m_medio').value        = row[idxMedio] || '';
+      document.getElementById('m_medio').value      = row[idxMedio] || '';
       document.getElementById('m_ano').value        = row[idxAno] || '';
       document.getElementById('m_mes').value        = row[idxMes] || '';
       document.getElementById('m_dia').value        = row[idxDia] || '';
@@ -1136,7 +1140,6 @@
       if (filaEdicion == null) return;
 
       // Índices
-      const idxRowHidden  = encabezados.indexOf('__ROW__'); // en tabla es la última columna
       const idxResponsable = encabezados.indexOf('RESPONSABLE');
       const idxEstado      = encabezados.indexOf('ESTADO');
       const idxRespuesta   = encabezados.indexOf('RESPUESTA');
@@ -1330,8 +1333,6 @@ ${responsable}
             opt.hidden = !visible;
             if (visible && !firstVisibleValue) firstVisibleValue = opt.value;
           });
-          // Si hay un único visible, opcionalmente seleccionarlo:
-          // select.value = firstVisibleValue || '';
         });
       }
     })();
