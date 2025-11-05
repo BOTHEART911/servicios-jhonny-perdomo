@@ -156,18 +156,18 @@
     /* Centrar el botón de Iniciar Sesión dentro del formulario */
     #btn-iniciar-sesion {
       display: block;
-      width: max-content;
-      margin: 0 auto 12px;
+      width: max-content;      /* contenido ajustado, no ancho completo */
+      margin: 0 auto 12px;     /* centra horizontalmente */
     }
 
     /* Centrar el banner (imagen) dentro del formulario */
     #contactosForm .image-container {
       display: flex;
-      justify-content: center;
+      justify-content: center; /* centra horizontalmente la imagen */
     }
 
     #contactosForm .image-container img {
-      display: block;
+      display: block;          /* asegura que respete el centrado en flex */
     }
 
     /* Filtro de Residencia en modal de Registro */
@@ -376,7 +376,8 @@
   <!-- Modal Registro (Agregar) -->
   <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-      <form id="formRegistro">
+      <!-- IMPORTANTE: desactivar validación nativa para evitar tooltips -->
+      <form id="formRegistro" novalidate>
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalRegistroLabel">REGISTRO DE SERVICIO</h5>
@@ -1334,6 +1335,15 @@ ${responsable}
             if (visible && !firstVisibleValue) firstVisibleValue = opt.value;
           });
         });
+      }
+    })();
+
+    // Desactivar tooltips nativos SOLO dentro del formulario de registro
+    (function(){
+      const formReg = document.getElementById('formRegistro');
+      if (formReg){
+        formReg.addEventListener('invalid', function(e){ e.preventDefault(); }, true);
+        formReg.setAttribute('novalidate', 'novalidate');
       }
     })();
 
