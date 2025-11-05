@@ -169,6 +169,17 @@
 #contactosForm .image-container img {
   display: block;          /* asegura que respete el centrado en flex */
 }
+
+/* Filtro de Residencia en modal de Registro */
+.residencia-filter-group {
+  display: flex; gap: 8px; align-items: center; margin-bottom: 6px;
+}
+.residencia-filter-group input[type="text"] {
+  flex: 1 1 auto; padding: 6px 8px; border: 1px solid #888; border-radius: 6px;
+}
+#reg-residencia {
+  width: 100%;
+}
   </style>
 </head>
 <body>
@@ -361,6 +372,210 @@
     </div>
   </div>
 
+  <!-- Modal Registro (Agregar) -->
+  <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <form id="formRegistro">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRegistroLabel">REGISTRO DE SERVICIO</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-2">
+              <div class="col-md-4">
+                <label class="form-label" for="reg-documento">DOCUMENTO</label>
+                <input id="reg-documento" class="form-control" type="text" inputmode="numeric" placeholder="6 a 10 dígitos" required>
+              </div>
+              <div class="col-md-8">
+                <label class="form-label" for="reg-nombre">NOMBRE</label>
+                <input id="reg-nombre" class="form-control" type="text" placeholder="Nombre y Apellido (mínimo 2 palabras)" required>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-6">
+                <label class="form-label" for="reg-contacto">CONTACTO</label>
+                <input id="reg-contacto" class="form-control" type="text" inputmode="numeric" placeholder="57XXXXXXXXXX (12 dígitos)" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="reg-residencia">RESIDENCIA</label>
+                <div class="residencia-filter-group">
+                  <input id="reg-residencia-filter" type="text" placeholder="Filtrar residencia..." aria-label="Filtrar residencia">
+                </div>
+                <select id="reg-residencia" class="form-select" required>
+                  <option value="" disabled selected>Selecciona tu Residencia</option>
+                  <option value="ACAPULCO I">ACAPULCO I</option>
+                  <option value="ACAPULCO II">ACAPULCO II</option>
+                  <option value="AGUAMARINA">AGUAMARINA</option>
+                  <option value="ALCALA I">ALCALA I</option>
+                  <option value="ALFONSO LOPEZ">ALFONSO LOPEZ</option>
+                  <option value="ALTAGRACIA I">ALTAGRACIA I</option>
+                  <option value="ALTAGRACIA II">ALTAGRACIA II</option>
+                  <option value="ALTAGRACIA IV">ALTAGRACIA IV</option>
+                  <option value="APROVITEF">APROVITEF</option>
+                  <option value="ARAGON I">ARAGON I</option>
+                  <option value="ARAGON II">ARAGON II</option>
+                  <option value="ARAGON III">ARAGON III</option>
+                  <option value="ARAGON IV">ARAGON IV</option>
+                  <option value="ARBOLEDA I">ARBOLEDA I</option>
+                  <option value="ARBOLEDA II">ARBOLEDA II</option>
+                  <option value="BALCONES DE ALEJANDRIA">BALCONES DE ALEJANDRIA</option>
+                  <option value="BILBAO">BILBAO</option>
+                  <option value="CALA I">CALA I</option>
+                  <option value="CANALES">CANALES</option>
+                  <option value="CANCUN">CANCUN</option>
+                  <option value="CAMALA">CAMALA</option>
+                  <option value="CASA DEL SOL I">CASA DEL SOL I</option>
+                  <option value="CASA DEL SOL II">CASA DEL SOL II</option>
+                  <option value="CENTRO">CENTRO</option>
+                  <option value="COLEGIO I">COLEGIO I</option>
+                  <option value="COLEGIO II">COLEGIO II</option>
+                  <option value="COLEGIO III">COLEGIO III</option>
+                  <option value="DUBAI">DUBAI</option>
+                  <option value="EL PORTAL DEL RUBI">EL PORTAL DEL RUBI</option>
+                  <option value="GAITAN">GAITAN</option>
+                  <option value="HANGARES">HANGARES</option>
+                  <option value="INVASION BRISAS DEL CARMEN">INVASION BRISAS DEL CARMEN</option>
+                  <option value="INVASION VILLA MAGDALENA">INVASION VILLA MAGDALENA</option>
+                  <option value="INVASION VILLA MARIANA">INVASION VILLA MARIANA</option>
+                  <option value="IQUEIMA">IQUEIMA</option>
+                  <option value="JARDINES DE BABILONIA">JARDINES DE BABILONIA</option>
+                  <option value="LA CAPILLA">LA CAPILLA</option>
+                  <option value="LA CEIBA">LA CEIBA</option>
+                  <option value="LA ESPERANZA">LA ESPERANZA</option>
+                  <option value="LA PAZ">LA PAZ</option>
+                  <option value="LA UNION">LA UNION</option>
+                  <option value="LAS ROSAS">LAS ROSAS</option>
+                  <option value="LAS VILLAS">LAS VILLAS</option>
+                  <option value="LIBERTADOR">LIBERTADOR</option>
+                  <option value="LLERAS">LLERAS</option>
+                  <option value="LOS MANGOS I">LOS MANGOS I</option>
+                  <option value="LOS MANGOS II">LOS MANGOS II</option>
+                  <option value="LOS MANGOS III">LOS MANGOS III</option>
+                  <option value="LOS MANGOS IV">LOS MANGOS IV</option>
+                  <option value="LOS MANGOS V">LOS MANGOS V</option>
+                  <option value="LOS MANGOS VI">LOS MANGOS VI</option>
+                  <option value="LOS MANGOS VII">LOS MANGOS VII</option>
+                  <option value="LOS PIJAOS">LOS PIJAOS</option>
+                  <option value="MIRADOR DE LA ESPERANZA">MIRADOR DE LA ESPERANZA</option>
+                  <option value="MIRADOR DEL SOL">MIRADOR DEL SOL</option>
+                  <option value="MONACO">MONACO</option>
+                  <option value="OBRERO">OBRERO</option>
+                  <option value="OBRERO DELIRIO">OBRERO DELIRIO</option>
+                  <option value="ORQUÍDEAS I">ORQUÍDEAS I</option>
+                  <option value="ORQUÍDEAS II">ORQUÍDEAS II</option>
+                  <option value="ORQUÍDEAS REAL I">ORQUÍDEAS REAL I</option>
+                  <option value="ORQUÍDEAS REAL II">ORQUÍDEAS REAL II</option>
+                  <option value="ORQUÍDEAS REAL III">ORQUÍDEAS REAL III</option>
+                  <option value="ORQUÍDEAS REAL IV">ORQUÍDEAS REAL IV</option>
+                  <option value="PARADERO I">PARADERO I</option>
+                  <option value="PARADERO II">PARADERO II</option>
+                  <option value="PARAISO">PARAISO</option>
+                  <option value="PAKISTAN I">PAKISTAN I</option>
+                  <option value="PAKISTAN II">PAKISTAN II</option>
+                  <option value="PAKISTAN III">PAKISTAN III</option>
+                  <option value="PALO VERDE">PALO VERDE</option>
+                  <option value="PARQUES DE ALEJANDRIA I">PARQUES DE ALEJANDRIA I</option>
+                  <option value="PARQUES DE ALEJANDRIA II">PARQUES DE ALEJANDRIA II</option>
+                  <option value="PARQUES DE ALEJANDRIA III">PARQUES DE ALEJANDRIA III</option>
+                  <option value="PARQUES DE ALEJANDRIA IV">PARQUES DE ALEJANDRIA IV</option>
+                  <option value="PARQUES DE PAKISTAN I">PARQUES DE PAKISTAN I</option>
+                  <option value="PARQUES DE PAKISTAN II">PARQUES DE PAKISTAN II</option>
+                  <option value="PARQUES DE PAKISTAN III">PARQUES DE PAKISTAN III</option>
+                  <option value="PARQUES DE PAKISTAN IV">PARQUES DE PAKISTAN IV</option>
+                  <option value="PARQUES DE PAKISTAN V">PARQUES DE PAKISTAN V</option>
+                  <option value="PORTAL DEL RUBY">PORTAL DEL RUBY</option>
+                  <option value="PRADERAS DE PALMA REAL">PRADERAS DE PALMA REAL</option>
+                  <option value="PRADOS DE SAN REMO">PRADOS DE SAN REMO</option>
+                  <option value="PUERTA BLANCA">PUERTA BLANCA</option>
+                  <option value="PUERTO BAHIA I">PUERTO BAHIA I</option>
+                  <option value="PUERTO BAHIA II">PUERTO BAHIA II</option>
+                  <option value="PUERTO DOMINGO">PUERTO DOMINGO</option>
+                  <option value="PUERTO MEDITERRANEO">PUERTO MEDITERRANEO</option>
+                  <option value="QUINTAS DE SAN ESTEBAN">QUINTAS DE SAN ESTEBAN</option>
+                  <option value="QUINTAS DE SAN FRANCISCO">QUINTAS DE SAN FRANCISCO</option>
+                  <option value="QUINTAS DEL DIVINO NIÑO">QUINTAS DEL DIVINO NIÑO</option>
+                  <option value="QUINTAS FERROVIARIAS">QUINTAS FERROVIARIAS</option>
+                  <option value="RIVERAS DEL MAGDALENA">RIVERAS DEL MAGDALENA</option>
+                  <option value="SAN ANDRES">SAN ANDRES</option>
+                  <option value="SAN FELIPE DE BARAJAS">SAN FELIPE DE BARAJAS</option>
+                  <option value="SAN FEMANDO DE SEGOVIA">SAN FEMANDO DE SEGOVIA</option>
+                  <option value="SAN FRANCISCO">SAN FRANCISCO</option>
+                  <option value="SAN LUIS">SAN LUIS</option>
+                  <option value="SANTA ANA">SANTA ANA</option>
+                  <option value="SANTA HAGIA SOTA">SANTA HAGIA SOTA</option>
+                  <option value="SANTA MARTHA">SANTA MARTHA</option>
+                  <option value="SANTA MONICA I">SANTA MONICA I</option>
+                  <option value="SANTA MONICA II">SANTA MONICA II</option>
+                  <option value="SINAI">SINAI</option>
+                  <option value="SOL Y BRISA">SOL Y BRISA</option>
+                  <option value="TARQUI">TARQUI</option>
+                  <option value="TAYRONA">TAYRONA</option>
+                  <option value="TERRAZAS DE ALEJANDRIA">TERRAZAS DE ALEJANDRIA</option>
+                  <option value="TOPACIO">TOPACIO</option>
+                  <option value="TRIANA">TRIANA</option>
+                  <option value="URBANIZACION ARRAYANES">URBANIZACION ARRAYANES</option>
+                  <option value="URBANIZACION EL PALMAR">URBANIZACION EL PALMAR</option>
+                  <option value="URBANIZACION EL PORTAL">URBANIZACION EL PORTAL</option>
+                  <option value="URBANIZACION EL RUBY">URBANIZACION EL RUBY</option>
+                  <option value="URBANIZACION LOS ALMENDROS">URBANIZACION LOS ALMENDROS</option>
+                  <option value="URBANIZACION VILLA LUCIA">URBANIZACION VILLA LUCIA</option>
+                  <option value="URBANIZACION VILLA MAGDALENA I">URBANIZACION VILLA MAGDALENA I</option>
+                  <option value="URBANIZACION VILLA MAGDALENA II">URBANIZACION VILLA MAGDALENA II</option>
+                  <option value="URBANIZACION VILLA MAGDALENA III">URBANIZACION VILLA MAGDALENA III</option>
+                  <option value="URBANIZACION VILLA MARIANA">URBANIZACIÓN VILLA MARIANA</option>
+                  <option value="VALLESUE">VALLESUE</option>
+                  <option value="VENECIA I">VENECIA I</option>
+                  <option value="VENECIA II">VENECIA II</option>
+                  <option value="VENECIA III">VENECIA III</option>
+                  <option value="VENECIA IV">VENECIA IV</option>
+                  <option value="VILLA DE LAS PALMAS">VILLA DE LAS PALMAS</option>
+                  <option value="VILLA DEL RIO I">VILLA DEL RIO I</option>
+                  <option value="VILLA DEL RIO II">VILLA DEL RIO II</option>
+                  <option value="VILLA DEL SOL">VILLA DEL SOL</option>
+                  <option value="VILLA ESPERANZA">VILLA ESPERANZA</option>
+                  <option value="VILLA LAS PALMAS">VILLA LAS PALMAS</option>
+                  <option value="VILLA MEDINA">VILLA MEDINA</option>
+                  <option value="VILLAS DEL MEDITERANEO">VILLAS DEL MEDITERANEO</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-6">
+                <label class="form-label" for="reg-servicio">SERVICIO</label>
+                <input id="reg-servicio" class="form-control fw-bold" type="text" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="reg-profesional">PROFESIONAL</label>
+                <input id="reg-profesional" class="form-control" type="text" readonly>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-12">
+                <label class="form-label" for="reg-solicitud">SOLICITUD</label>
+                <textarea id="reg-solicitud" class="form-control" rows="3" placeholder="Describe la solicitud..." required></textarea>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-12">
+                <label class="form-label" for="reg-respuesta">RESPUESTA</label>
+                <textarea id="reg-respuesta" class="form-control" rows="4" placeholder="Escribe la respuesta..." required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btnGuardarRegistro" type="submit" class="boton-efecto">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- JS y dependencias -->
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
@@ -470,6 +685,31 @@
           action: 'eliminarFilasServicios',
           documento: documento || '',
           rowIndices: JSON.stringify(rowIndices || [])
+        });
+        const resp = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return await resp.json();
+      } finally { stopLoading(); }
+    }
+
+    // NUEVO: Guardar Solicitud (Agregar)
+    async function apiGuardarSolicitud(formData) {
+      startLoading();
+      try {
+        const body = new URLSearchParams({
+          action: 'guardarSolicitud',
+          documento: formData.documento || '',
+          nombre: formData.nombre || '',
+          telefono: formData.telefono || '',
+          residencia: formData.residencia || '',
+          servicio: formData.servicio || '',
+          responsable: formData.responsable || '',
+          solicitud: formData.solicitud || '',
+          respuesta: formData.respuesta || ''
         });
         const resp = await fetch(WEB_APP_URL, {
           method: 'POST',
@@ -642,7 +882,20 @@
 
       // Botones por rol
       const colvisButton = { extend: 'colvis', text: 'Filtrar Columnas' };
+      const btnAgregar = {
+        text: `Agregar <span class="ms-1 align-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
+          </svg>
+        </span>`,
+        className: 'btn btn-primary',
+        attr: { id: 'btnAgregar' },
+        action: function(e, dt) {
+          abrirModalRegistro();
+        }
+      };
       const commonExportButtons = [
+        btnAgregar,
         { extend: 'copy',  text: '<i class="bi bi-clipboard-fill"></i>', className: 'btn btn-secondary', exportOptions: { columns: ':visible' }, title: 'Servicios ' + nombreProfesional },
         { extend: 'excel', text: '<i class="bi bi-file-earmark-excel-fill"></i>', className: 'btn btn-success',  exportOptions: { columns: ':visible' }, filename: 'Servicios ' + nombreProfesional, title: 'Servicios ' + nombreProfesional },
         { extend: 'pdf',   text: '<i class="bi bi-file-earmark-pdf-fill"></i>',   className: 'btn btn-danger',   exportOptions: { columns: ':visible' }, filename: 'Servicios ' + nombreProfesional, title: 'Servicios ' + nombreProfesional },
@@ -1020,6 +1273,195 @@ ${responsable}
             input.focus();
             input.setSelectionRange(input.value.length, input.value.length);
           } catch(e){}
+        });
+      }
+    })();
+
+    // ---------- NUEVO: Modal Registro (Agregar) ----------
+    let modalRegistroInstance = null;
+    function abrirModalRegistro(){
+      if (!documentoGuardado) {
+        Swal.fire({ icon:'warning', title:'Sesión requerida', text:'Debes iniciar sesión para agregar un servicio.', customClass: { popup: 'swal2-responsive-popup' }});
+        return;
+      }
+      // Prefill
+      const inpDoc = document.getElementById('reg-documento');
+      const inpNombre = document.getElementById('reg-nombre');
+      const inpContacto = document.getElementById('reg-contacto');
+      const selResidencia = document.getElementById('reg-residencia');
+      const inpServicio = document.getElementById('reg-servicio');
+      const inpProfesional = document.getElementById('reg-profesional');
+      const taSolicitud = document.getElementById('reg-solicitud');
+      const taRespuesta = document.getElementById('reg-respuesta');
+      const filtroResidencia = document.getElementById('reg-residencia-filter');
+
+      inpDoc.value = '';
+      inpNombre.value = '';
+      inpContacto.value = '57';
+      selResidencia.value = '';
+      filtroResidencia.value = '';
+      // Asegurar todas las opciones visibles
+      Array.from(selResidencia.options).forEach((opt, idx) => { if (idx>0) opt.hidden = false; });
+
+      inpServicio.value = servicioProfesional || '';
+      inpProfesional.value = nombreProfesional || '';
+      taSolicitud.value = '';
+      taRespuesta.value = '';
+
+      // Focus al primer campo
+      setTimeout(()=>inpDoc.focus(), 200);
+
+      modalRegistroInstance = new bootstrap.Modal(document.getElementById('modalRegistro'));
+      modalRegistroInstance.show();
+    }
+
+    // Filtro de Residencia
+    (function(){
+      const filtro = document.getElementById('reg-residencia-filter');
+      const select = document.getElementById('reg-residencia');
+      if (filtro && select){
+        filtro.addEventListener('input', function(){
+          const q = (this.value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          let firstVisibleValue = '';
+          Array.from(select.options).forEach((opt, idx) => {
+            if (idx === 0) return; // placeholder
+            const text = (opt.textContent || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            const visible = text.includes(q);
+            opt.hidden = !visible;
+            if (visible && !firstVisibleValue) firstVisibleValue = opt.value;
+          });
+          // Si hay un único visible, opcionalmente seleccionarlo:
+          // select.value = firstVisibleValue || '';
+        });
+      }
+    })();
+
+    // Validaciones helper
+    function soloDigitos(str){ return (str||'').replace(/\D/g,''); }
+    function validarRegistroForm(){
+      const doc = soloDigitos(document.getElementById('reg-documento').value);
+      const nombre = (document.getElementById('reg-nombre').value||'').trim();
+      let contacto = soloDigitos(document.getElementById('reg-contacto').value);
+      const residencia = document.getElementById('reg-residencia').value || '';
+      const servicio = (document.getElementById('reg-servicio').value||'').trim();
+      const profesional = (document.getElementById('reg-profesional').value||'').trim();
+      const solicitud = (document.getElementById('reg-solicitud').value||'').trim();
+      const respuesta = (document.getElementById('reg-respuesta').value||'').trim();
+
+      // Documento: 6-10 dígitos
+      if (!/^\d{6,10}$/.test(doc)) {
+        return { ok:false, msg:'El DOCUMENTO debe tener entre 6 y 10 dígitos.' };
+      }
+
+      // Nombre: mínimo 2 palabras
+      const palabras = nombre.split(/\s+/).filter(Boolean);
+      if (palabras.length < 2) {
+        return { ok:false, msg:'El NOMBRE debe contener al menos 2 palabras.' };
+      }
+
+      // Contacto: 12 dígitos, inicia con 57
+      if (!contacto.startsWith('57')) contacto = '57' + contacto;
+      if (!/^\d{12}$/.test(contacto)) {
+        return { ok:false, msg:'El CONTACTO debe tener 12 dígitos y comenzar con 57.' };
+      }
+
+      // Residencia requerida
+      if (!residencia) {
+        return { ok:false, msg:'Selecciona una RESIDENCIA.' };
+      }
+
+      // Servicio / Profesional auto y requeridos
+      if (!servicio) {
+        return { ok:false, msg:'El SERVICIO no está definido para tu sesión.' };
+      }
+      if (!profesional) {
+        return { ok:false, msg:'El PROFESIONAL no está definido para tu sesión.' };
+      }
+
+      if (!solicitud) {
+        return { ok:false, msg:'La SOLICITUD es requerida.' };
+      }
+      if (!respuesta) {
+        return { ok:false, msg:'La RESPUESTA es requerida.' };
+      }
+
+      return {
+        ok:true,
+        data:{
+          documento: doc,
+          nombre: nombre,
+          telefono: contacto,
+          residencia: residencia,
+          servicio: servicio,
+          responsable: profesional,
+          solicitud: solicitud,
+          respuesta: respuesta
+        }
+      };
+    }
+
+    // Envío del registro
+    document.getElementById('formRegistro').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const val = validarRegistroForm();
+      if (!val.ok){
+        Swal.fire({ icon:'warning', title:'Validación', text: val.msg, customClass: { popup:'swal2-responsive-popup' } });
+        return;
+      }
+
+      try{
+        Swal.fire({ title:'Guardando...', allowOutsideClick:false, didOpen:()=>Swal.showLoading() });
+        const res = await apiGuardarSolicitud(val.data);
+        Swal.close();
+
+        if (!res || res.success !== true){
+          throw new Error(res && res.message ? res.message : 'No se pudo guardar el registro');
+        }
+
+        // Recargar datos para refrescar tabla y __ROW__
+        const reval = await apiValidarProfesional(documentoGuardado);
+        if (reval && reval.existe === true){
+          esAdmin = !!reval.esAdmin;
+          nombreProfesional = reval.nombreProfesional || nombreProfesional;
+          servicioProfesional = reval.servicioProfesional || servicioProfesional;
+          encabezados = reval.encabezados || encabezados;
+          filas = reval.filas || filas;
+
+          if (tabla){ tabla.destroy(); }
+          inicializarTabla();
+        }
+
+        if (modalRegistroInstance){
+          modalRegistroInstance.hide();
+        }
+
+        playSoundOnce(SOUNDS.success);
+        Swal.fire({
+          icon:'success',
+          title:'Registro guardado',
+          html:'El servicio fue registrado correctamente.',
+          timer:2200,
+          showConfirmButton:false
+        });
+      }catch(err){
+        Swal.fire({ icon:'error', title:'Error al guardar', text:String(err) });
+      }
+    });
+
+    // Forzar formato de entradas numéricas en Registro
+    (function(){
+      const doc = document.getElementById('reg-documento');
+      const tel = document.getElementById('reg-contacto');
+      if (doc){
+        doc.addEventListener('input', function(){
+          this.value = soloDigitos(this.value).slice(0, 10);
+        });
+      }
+      if (tel){
+        tel.addEventListener('input', function(){
+          let v = soloDigitos(this.value);
+          if (!v.startsWith('57')) v = '57' + v;
+          this.value = v.slice(0, 12);
         });
       }
     })();
