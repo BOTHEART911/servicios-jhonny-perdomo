@@ -836,16 +836,38 @@
         }
 
         if (data.residencia && selResidencia) {
-          const residencia = String(data.residencia || '').trim();
-          selResidencia.value = residencia;
+  const residenciaRaw = String(data.residencia || '').trim();
 
-          if (filtroResidencia) {
-            filtroResidencia.value = '';
-          }
-          Array.from(selResidencia.options).forEach((opt, idx) => {
-            if (idx > 0) opt.hidden = false;
-          });
-        }
+  // Mostrar todas las opciones (por si el filtro las ocultó)
+  Array.from(selResidencia.options).forEach((opt, idx) => {
+    if (idx > 0) opt.hidden = false;
+  });
+  if (filtroResidencia) filtroResidencia.value = '';
+
+  // Normalizador (quita tildes y compara en MAYÚSCULAS)
+  const norm = (s) => String(s || '')
+    .trim()
+    .toUpperCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+  const target = norm(residenciaRaw);
+
+  // 1) intento directo
+  selResidencia.value = residenciaRaw;
+
+  // 2) si no quedó seleccionado, buscar por comparación normalizada
+  if (!selResidencia.value) {
+    const options = Array.from(selResidencia.options);
+    const match = options.find((opt, idx) => {
+      if (idx === 0) return false; // placeholder
+      return norm(opt.value) === target || norm(opt.textContent) === target;
+    });
+    if (match) selResidencia.value = match.value;
+  }
+
+  // Si aún no se pudo, no frenamos el flujo (queda editable)
+}
 
         playSoundOnce(SOUNDS.success);
         Swal.fire({
