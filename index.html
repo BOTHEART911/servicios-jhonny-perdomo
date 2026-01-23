@@ -58,19 +58,60 @@
     @keyframes stay { 0%, 25% { transform: rotateY(0deg);} 50%, 75% { transform: rotateY(0deg);} 100% { transform: rotateY(360deg);} }
     .image-container img { max-width: 220px; border-radius: 2px; }
     .copyright { font-size: 0.85em; color: #666; margin-top: 4px; text-align: center; }
+
+    /* ===== LOGIN estilo tipo index2 (reemplaza al diseño anterior) ===== */
     #contactosForm {
-      margin: 30px auto 0 auto; max-width: 400px; background: rgba(255,255,255,0.97);
-      border-radius: 12px; box-shadow: 0 0 8px rgba(0,0,0,0.2); padding: 24px 16px 10px 16px; display: block;
+      margin: 30px auto 0 auto;
+      max-width: 420px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(3px);
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      padding: 16px 16px 10px 16px;
+      display: block;
       transition: opacity .25s ease, transform .25s ease;
       z-index: 10;
     }
-    #contactosForm label { font-weight: bold; color: #1257b7; }
-    #contactosForm input[type="number"], #contactosForm input[type="password"], #contactosForm input[type="text"] {
-      width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #888; margin-bottom: 7px; margin-top: 2px;
+
+    #contactosForm label {
+      display:block;
+      font-weight: 700;
+      margin: 10px 0 6px;
+      color: #007BFF;
     }
+
+    #contactosForm input[type="number"],
+    #contactosForm input[type="password"],
+    #contactosForm input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      border: 1.5px solid #888;
+      margin-bottom: 7px;
+      margin-top: 2px;
+      background:#fff;
+      outline:none;
+      transition: border-color .2s ease, transform .08s ease;
+      font-size:16px;
+    }
+
+    #contactosForm input:focus{
+      border-color:#007BFF;
+    }
+
     .boton-efecto {
-      background: linear-gradient(90deg, #1257b7, #3ea652); color: white; border: none; padding: 8px 16px; border-radius: 7px;
-      font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.2s; box-shadow: 1px 2px 4px #ccc;
+      background: linear-gradient(90deg, #1257b7, #3ea652);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 7px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 1px 2px 4px #ccc;
     }
     .boton-efecto:hover { background: linear-gradient(90deg, #3ea652, #1257b7); }
     .error { color: red; margin-bottom: 8px; text-align: center; font-weight: bold; }
@@ -94,7 +135,13 @@
     .icon-btn-header:hover { color: #28a745; }
 
     .titulo-contenedor { perspective: 1200px; text-align: center; }
-    .titulo-animado { font-size: 2rem; font-weight: bold; color: #007BFF; text-shadow: 3px 3px 3px #031732; animation: rotate 5s infinite linear, stay 10s infinite; }
+    .titulo-animado {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #007BFF;
+      text-shadow: 0 2px 2px #031732;
+      animation: rotate 5s infinite linear, stay 10s infinite;
+    }
     .descripcion-animado { font-size: 1.5rem; font-weight: bold; color: #007BFF; text-shadow: 3px 3px 3px #A9A9A9; animation: rotate 5s infinite linear, stay 10s infinite; }
     .form-description { text-align: center; font-size: 1em; color: #666; margin-bottom: 20px; }
     h1, h2 { text-align: center; margin-bottom: 10px; }
@@ -140,7 +187,7 @@
     .spinner-ios i:nth-child(11) { transform: rotate(300deg) translateY(-24px); animation-delay:-0.1s; }
     .spinner-ios i:nth-child(12) { transform: rotate(330deg) translateY(-24px); animation-delay: 0s; }
 
-    /* Input password toggle */
+    /* Input password toggle (login) */
     .input-pass-group { position: relative; width: 100%; }
     .input-pass-group input { width: 100%; padding-right: 42px; }
     .input-pass-group .toggle-pass {
@@ -156,18 +203,18 @@
     /* Centrar el botón de Iniciar Sesión dentro del formulario */
     #btn-iniciar-sesion {
       display: block;
-      width: max-content;      /* contenido ajustado, no ancho completo */
-      margin: 0 auto 12px;     /* centra horizontalmente */
+      width: 100%;
+      margin: 12px auto 12px;
     }
 
     /* Centrar el banner (imagen) dentro del formulario */
     #contactosForm .image-container {
       display: flex;
-      justify-content: center; /* centra horizontalmente la imagen */
+      justify-content: center;
     }
 
     #contactosForm .image-container img {
-      display: block;          /* asegura que respete el centrado en flex */
+      display: block;
     }
 
     /* Filtro de Residencia en modal de Registro */
@@ -180,7 +227,7 @@
     #reg-residencia {
       width: 100%;
     }
-  </style>
+</style>
 </head>
 <body>
   <!-- Loader iOS -->
@@ -386,8 +433,32 @@
           <div class="modal-body">
             <div class="row g-2">
               <div class="col-md-4">
-                <label class="form-label" for="reg-documento">DOCUMENTO</label>
-                <input id="reg-documento" class="form-control" type="text" inputmode="numeric" placeholder="6 a 10 dígitos" required>
+               <label class="form-label" for="reg-documento">DOCUMENTO</label>
+<div class="pwd-wrapper" style="position:relative; width:100%;">
+  <input id="reg-documento" class="form-control" type="text" inputmode="numeric" placeholder="6 a 10 dígitos" required style="padding-right:40px;">
+  <button type="button" id="btnBuscarDocumento" aria-label="Buscar documento" class="toggle-cedula" style="
+    position:absolute;
+    top:50%;
+    right:10px;
+    transform:translateY(-50%);
+    background:transparent !important;
+    border:0 !important;
+    padding:0;
+    width:28px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    border-radius:6px;
+  ">
+    <img
+      src="https://res.cloudinary.com/dqqeavica/image/upload/v1769204556/buscar_vaaua0.webp"
+      alt="Buscar"
+      style="width:22px;height:22px;display:block;pointer-events:none;border-radius:4px;background:#fff;"
+    >
+  </button>
+</div>
               </div>
               <div class="col-md-8">
                 <label class="form-label" for="reg-nombre">NOMBRE</label>
@@ -703,6 +774,74 @@
 
     // NUEVO: Guardar Solicitud (Agregar)
     async function apiGuardarSolicitud(formData) {
+      async function apiBuscarEnPrincipal(documento) {
+    startLoading();
+    try {
+      const body = new URLSearchParams({
+        action: 'buscarEnPrincipal',
+        documento: documento || ''
+      });
+      const resp = await fetch(WEB_APP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return await resp.json();
+    } finally { stopLoading(); }
+  }
+
+  async function buscarYAutocompletarRegistro() {
+    const docInput = document.getElementById('reg-documento');
+    const nombreInput = document.getElementById('reg-nombre');
+    const telInput = document.getElementById('reg-contacto');
+    const selResidencia = document.getElementById('reg-residencia');
+    const filtroResidencia = document.getElementById('reg-residencia-filter');
+
+    const documento = String(docInput?.value || '').trim().replace(/\D/g,'');
+    if (!/^\d{6,10}$/.test(documento)) {
+      Swal.fire({ icon:'warning', title:'Documento inválido', text:'Ingresa de 6 a 10 dígitos para buscar.', customClass:{ popup:'swal2-responsive-popup' } });
+      return;
+    }
+
+    try {
+      const res = await apiBuscarEnPrincipal(documento);
+
+      if (!res || res.ok !== true || !res.encontrado) {
+        Swal.fire({ icon:'info', title:'No encontrado', text:'No encontramos este documento en PRINCIPAL. Puedes continuar el registro.', timer: 2200, showConfirmButton:false, customClass:{ popup:'swal2-responsive-popup' } });
+        return;
+      }
+
+      const data = res.data || {};
+
+      if (data.nombre && nombreInput) {
+        nombreInput.value = String(data.nombre || '').trim();
+      }
+
+      if (data.contacto && telInput) {
+        let contacto = String(data.contacto || '').replace(/\D/g,'');
+        if (!contacto.startsWith('57')) contacto = '57' + contacto;
+        telInput.value = contacto;
+      }
+
+      if (data.residencia && selResidencia) {
+        const residencia = String(data.residencia || '').trim();
+        selResidencia.value = residencia;
+
+        if (filtroResidencia) {
+          filtroResidencia.value = '';
+        }
+        Array.from(selResidencia.options).forEach((opt, idx) => {
+          if (idx > 0) opt.hidden = false;
+        });
+      }
+
+      playSoundOnce(SOUNDS.success);
+      Swal.fire({ icon:'success', title:'Datos encontrados', text:'Se autocompletó desde PRINCIPAL. Puedes editar los campos si lo deseas.', timer: 2000, showConfirmButton:false, customClass:{ popup:'swal2-responsive-popup' } });
+    } catch (err) {
+      Swal.fire({ icon:'error', title:'Error al buscar', text:String(err), customClass:{ popup:'swal2-responsive-popup' } });
+    }
+  }
       startLoading();
       try {
         const body = new URLSearchParams({
@@ -1316,6 +1455,13 @@ ${responsable}
       setTimeout(()=>inpDoc.focus(), 200);
 
       modalRegistroInstance = new bootstrap.Modal(document.getElementById('modalRegistro'));
+      const btnBuscar = document.getElementById('btnBuscarDocumento');
+  if (btnBuscar){
+    btnBuscar.onclick = function(){
+      playSoundOnce(SOUNDS.back);
+      buscarYAutocompletarRegistro();
+    };
+  }
       modalRegistroInstance.show();
     }
 
