@@ -773,75 +773,101 @@
     }
 
     // NUEVO: Guardar Solicitud (Agregar)
-    async function apiGuardarSolicitud(formData) {
-      async function apiBuscarEnPrincipal(documento) {
-    startLoading();
-    try {
-      const body = new URLSearchParams({
-        action: 'buscarEnPrincipal',
-        documento: documento || ''
-      });
-      const resp = await fetch(WEB_APP_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body
-      });
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      return await resp.json();
-    } finally { stopLoading(); }
-  }
-
-  async function buscarYAutocompletarRegistro() {
-    const docInput = document.getElementById('reg-documento');
-    const nombreInput = document.getElementById('reg-nombre');
-    const telInput = document.getElementById('reg-contacto');
-    const selResidencia = document.getElementById('reg-residencia');
-    const filtroResidencia = document.getElementById('reg-residencia-filter');
-
-    const documento = String(docInput?.value || '').trim().replace(/\D/g,'');
-    if (!/^\d{6,10}$/.test(documento)) {
-      Swal.fire({ icon:'warning', title:'Documento inválido', text:'Ingresa de 6 a 10 dígitos para buscar.', customClass:{ popup:'swal2-responsive-popup' } });
-      return;
+   async function apiBuscarEnPrincipal(documento) {
+      startLoading();
+      try {
+        const body = new URLSearchParams({
+          action: 'buscarEnPrincipal',
+          documento: documento || ''
+        });
+        const resp = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return await resp.json();
+      } finally { stopLoading(); }
     }
 
-    try {
-      const res = await apiBuscarEnPrincipal(documento);
+    async function buscarYAutocompletarRegistro() {
+      const docInput = document.getElementById('reg-documento');
+      const nombreInput = document.getElementById('reg-nombre');
+      const telInput = document.getElementById('reg-contacto');
+      const selResidencia = document.getElementById('reg-residencia');
+      const filtroResidencia = document.getElementById('reg-residencia-filter');
 
-      if (!res || res.ok !== true || !res.encontrado) {
-        Swal.fire({ icon:'info', title:'No encontrado', text:'No encontramos este documento en PRINCIPAL. Puedes continuar el registro.', timer: 2200, showConfirmButton:false, customClass:{ popup:'swal2-responsive-popup' } });
+      const documento = String(docInput?.value || '').trim().replace(/\D/g,'');
+      if (!/^\d{6,10}$/.test(documento)) {
+        Swal.fire({
+          icon:'warning',
+          title:'Documento inválido',
+          text:'Ingresa de 6 a 10 dígitos para buscar.',
+          customClass:{ popup:'swal2-responsive-popup' }
+        });
         return;
       }
 
-      const data = res.data || {};
+      try {
+        const res = await apiBuscarEnPrincipal(documento);
 
-      if (data.nombre && nombreInput) {
-        nombreInput.value = String(data.nombre || '').trim();
-      }
-
-      if (data.contacto && telInput) {
-        let contacto = String(data.contacto || '').replace(/\D/g,'');
-        if (!contacto.startsWith('57')) contacto = '57' + contacto;
-        telInput.value = contacto;
-      }
-
-      if (data.residencia && selResidencia) {
-        const residencia = String(data.residencia || '').trim();
-        selResidencia.value = residencia;
-
-        if (filtroResidencia) {
-          filtroResidencia.value = '';
+        if (!res || res.ok !== true || !res.encontrado) {
+          Swal.fire({
+            icon:'info',
+            title:'No encontrado',
+            text:'No encontramos este documento en PRINCIPAL. Puedes continuar el registro.',
+            timer: 2200,
+            showConfirmButton:false,
+            customClass:{ popup:'swal2-responsive-popup' }
+          });
+          return;
         }
-        Array.from(selResidencia.options).forEach((opt, idx) => {
-          if (idx > 0) opt.hidden = false;
+
+        const data = res.data || {};
+
+        if (data.nombre && nombreInput) {
+          nombreInput.value = String(data.nombre || '').trim();
+        }
+
+        if (data.contacto && telInput) {
+          let contacto = String(data.contacto || '').replace(/\D/g,'');
+          if (!contacto.startsWith('57')) contacto = '57' + contacto;
+          telInput.value = contacto;
+        }
+
+        if (data.residencia && selResidencia) {
+          const residencia = String(data.residencia || '').trim();
+          selResidencia.value = residencia;
+
+          if (filtroResidencia) {
+            filtroResidencia.value = '';
+          }
+          Array.from(selResidencia.options).forEach((opt, idx) => {
+            if (idx > 0) opt.hidden = false;
+          });
+        }
+
+        playSoundOnce(SOUNDS.success);
+        Swal.fire({
+          icon:'success',
+          title:'Datos encontrados',
+          text:'Se autocompletó desde PRINCIPAL. Puedes editar los campos si lo deseas.',
+          timer: 2000,
+          showConfirmButton:false,
+          customClass:{ popup:'swal2-responsive-popup' }
+        });
+      } catch (err) {
+        Swal.fire({
+          icon:'error',
+          title:'Error al buscar',
+          text:String(err),
+          customClass:{ popup:'swal2-responsive-popup' }
         });
       }
-
-      playSoundOnce(SOUNDS.success);
-      Swal.fire({ icon:'success', title:'Datos encontrados', text:'Se autocompletó desde PRINCIPAL. Puedes editar los campos si lo deseas.', timer: 2000, showConfirmButton:false, customClass:{ popup:'swal2-responsive-popup' } });
-    } catch (err) {
-      Swal.fire({ icon:'error', title:'Error al buscar', text:String(err), customClass:{ popup:'swal2-responsive-popup' } });
     }
-  }
+
+    // NUEVO: Guardar Solicitud (Agregar)
+    async function apiGuardarSolicitud(formData) {
       startLoading();
       try {
         const body = new URLSearchParams({
