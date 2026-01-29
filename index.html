@@ -973,13 +973,32 @@
         document.getElementById('tituloProfesional').textContent =
           'Profesional ' + (nombreProfesional || (esAdmin ? 'ADMINISTRADOR' : ''));
 
-        if (!filas || filas.length === 0) {
-          Swal.fire({
+               if (!filas || filas.length === 0) {
+          const r = await Swal.fire({
             icon: 'info',
             title: 'Sin registros',
-            html: 'No hay solicitudes para tu servicio en este momento.<br><br><div class="copyright">Copyright © <a href="https://whatsapp.com/channel/0029VbBEYJ83LdQbOODLO10S" target="_blank"><b>BOT HEART</b></a></div>',
-            width: '90%', padding: '1rem', customClass: { popup: 'swal2-responsive-popup' }
+            text: 'No hay solicitudes para tu servicio en este momento, puedes crear tu primer servicio.',
+            showCancelButton: true,
+            confirmButtonText: 'CREAR',
+            cancelButtonText: 'Volver',
+            width: '90%',
+            padding: '1rem',
+            customClass: { popup: 'swal2-responsive-popup' }
           });
+
+          if (r.isConfirmed) {
+            // Entrar al módulo y abrir directamente el modal Agregar
+            ocultarFormulario();
+
+            // Asegurar que exista tabla aunque esté vacía (para que luego refresque sin problemas)
+            if (tabla) { tabla.destroy(); }
+            inicializarTabla();
+
+            // Abrir modal Agregar
+            abrirModalRegistro();
+            return;
+          }
+
           mostrarFormulario();
           return;
         }
@@ -1051,7 +1070,7 @@
       $("#tablaServicios tfoot").html("<tr>"+colsDT.map(col=>`<th class='text-center'>${col.title}</th>`).join("")+"</tr>");
 
       // Data: agregar columnas de acción, selección y __ROW__
-      const data = filas.map(row => {
+            const data = (Array.isArray(filas) ? filas : []).map(row => {
         const base = row.slice(0, encabezados.length - 1); // A..L
         const rowIndexVal = row[idxRowIndex]; // __ROW__
         return [...base, '', '', '', rowIndexVal];
