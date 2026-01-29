@@ -1326,6 +1326,12 @@
       document.getElementById('m_residencia').value = row[idxResidencia] || '';
       document.getElementById('m_servicio').value   = row[idxServicio] || '';
       document.getElementById('m_responsable').value = (row[idxResponsable] || nombreProfesional || '');
+            const inpResp = document.getElementById('m_responsable');
+      if (inpResp) {
+        inpResp.value = (nombreProfesional || '').toString();
+        inpResp.readOnly = true;
+        inpResp.title = 'Este campo no se puede editar';
+      }
       document.getElementById('m_estado').value     = (String(row[idxEstado] || '').trim().toUpperCase() || 'PENDIENTE');
       document.getElementById('m_solicitud').value  = row[idxSolicitud] || '';
       document.getElementById('m_respuesta').value  = row[idxRespuesta] || '';
@@ -1353,7 +1359,7 @@
 
       const rowData = tabla.row(filaEdicion).data();
       const rowIndex = rowData[rowData.length - 1]; // __ROW__ oculto
-      const responsable = document.getElementById('m_responsable').value.trim();
+      const responsable = (nombreProfesional || '').toString().trim();
       const respuesta = document.getElementById('m_respuesta').value.trim();
 
       if (!responsable || !respuesta) {
